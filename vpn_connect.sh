@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Create vpnc_connecting file with hardcoded conf_id (to be populated by setup.sh)
+# Create vpnc_connecting file with hardcoded values (to be populated by setup.sh)
 cat > /usr/syno/etc/synovpnclient/vpnc_connecting <<END
 conf_id=<CONF_ID>
-conf_name=MyVPN
-proto=openvpn
+conf_name=<CONF_NAME>
+proto=<PROTO>
 END
 
 # Connect to VPN

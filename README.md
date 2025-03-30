@@ -7,26 +7,38 @@ Scripts to schedule VPN connection and disconnection on a Synology NAS (e.g., DS
 - A configured VPN profile in DSM (`Control Panel > Network > Network Interface`).
 - A shared folder on the NAS (e.g., `/volume1/scripts`).
 - Admin access to DSM.
-- Git installed on the NAS or a local machine for pulling updates.
+- Git installed on the NAS for the setup script to clone the repo.
 
 ## Installation
 
+### Option 1: Auto-Launch Setup with Curl
+
+1. **Run Setup Directly from GitHub:**
+
+   - Connect your VPN manually via DSM GUI first to populate `/usr/syno/etc/synovpnclient/vpnc_last_connect`.
+   - Run this one-liner to fetch and execute `setup.sh`:
+     `curl -sL https://raw.githubusercontent.com/byipr/autovpn/master/setup.sh | sudo bash`
+   - This downloads `setup.sh`, clones the repo to `/volume1/scripts/autovpn`, and configures the scripts with your VPN details.
+
+### Option 2: Clone and Run Setup Manually
+
 1. **Clone or Pull the Repository:**
 
-   On a local machine or NAS with Git:
+   On your NAS with Git:
    `git clone https://github.com/byipr/autovpn.git /volume1/scripts/autovpn`
    
-   Or run the setup script:
-   `chmod +x /volume1/scripts/autovpn/setup.sh; sudo /volume1/scripts/autovpn/setup.sh`
+   Then run the setup script:
+   `chmod +x /volume1/scripts/autovpn/setup.sh`
+   `sudo /volume1/scripts/autovpn/setup.sh`
 
-   If Git isn’t available, download the ZIP from GitHub and extract to `/volume1/scripts/autovpn` using DSM `File Station` or SFTP.
+   If Git isn’t available, download the ZIP from GitHub and extract to `/volume1/scripts/autovpn` using DSM `File Station` or SFTP, then run the setup commands above.
 
 2. **Run Setup Script:**
 
    - Connect your VPN manually via DSM GUI first to populate `/usr/syno/etc/synovpnclient/vpnc_last_connect`.
    - Run:
      `sudo /volume1/scripts/autovpn/setup.sh`
-   - This populates your `conf_id` into the scripts.
+   - This populates your `conf_id`, `conf_name`, and `proto` into the scripts.
 
 3. **Schedule Tasks:**
 
@@ -64,7 +76,7 @@ Then re-run:
 
 ## Notes
 
-- `setup.sh` extracts your VPN’s `conf_id` from `/usr/syno/etc/synovpnclient/vpnc_last_connect` and embeds it into the scripts.
+- `setup.sh` extracts your VPN’s `conf_id`, `conf_name`, and `proto` from `/usr/syno/etc/synovpnclient/vpnc_last_connect` and embeds them into the scripts.
 - Logging writes to `/volume1/scripts/autovpn/vpn_log.txt`.
 - Tasks must run as `root` in Task Scheduler for proper permissions.
-- Adjust `conf_name` and `proto` in `vpn_connect.sh` if your VPN differs (e.g., `pptp`, `l2tp`).
+- The `curl` method requires `git` on the NAS to clone the repo during setup.
