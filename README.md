@@ -14,11 +14,10 @@ Scripts to schedule VPN connection and disconnection on a Synology NAS (e.g., DS
 1. **Clone or Pull the Repository:**
 
    On a local machine or NAS with Git:
-   `git clone https://github.com/byipr/synology.git /volume1/scripts/autovpn`  # Update URL if new repo
+   `git clone https://github.com/byipr/autovpn.git /volume1/scripts/autovpn`
    
    Or run the setup script:
-   `chmod +x /volume1/scripts/autovpn/setup.sh`
-   `sudo /volume1/scripts/autovpn/setup.sh`
+   `chmod +x /volume1/scripts/autovpn/setup.sh; sudo /volume1/scripts/autovpn/setup.sh`
 
    If Git isn’t available, download the ZIP from GitHub and extract to `/volume1/scripts/autovpn` using DSM `File Station` or SFTP.
 
